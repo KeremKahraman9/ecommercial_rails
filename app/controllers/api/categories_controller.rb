@@ -2,6 +2,8 @@ module Api
   class CategoriesController < ApplicationController
     protect_from_forgery with: :null_session
 
+    before_action :set_category, only: %i[update show destroy]
+
     def index
       @categories = Category.order(created_at: :desc)
       if !@categories.blank?
@@ -12,16 +14,16 @@ module Api
     end
 
     def show
-      category = set_category
-      if !category.blank?
-        render json: @categories, status: :ok
+      if !@category.blank?
+        render json: @category, status: :ok
       else
-        render json: @categories, status: :bad_request
+        render json: @category, status: :bad_request
       end
     end
 
     def create
       @category = Category.create(params_category)
+      byebug
       if @category.save
         render json: @category, status: :ok
       else
@@ -30,8 +32,8 @@ module Api
     end
 
     def update
-      category = set_category
-      if category.update(params_category)
+      byebug
+      if @category.update(params_category)
         render json: @category, status: :ok
       else
         render json: "Update Failed", status: :bad_request
@@ -39,8 +41,7 @@ module Api
     end
 
     def destroy
-      category = set_category
-      if category.destroy
+      if @category.destroy
         render json: "Delete Success", status: :ok
       else
         render json: "Delete Failed", status: :bad_request
