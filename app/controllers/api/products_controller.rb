@@ -4,23 +4,31 @@ module Api
 
     before_action :set_product, only: %i[update show destroy]
     after_action :after_action_method, only: %i[create]
+    
     def index
       @products = Product.all
-      render json: @products
+      if !@products.blank?
+        @message = "Prodcuts rendered."
+        render :index, status: :ok
+      else
+        @message = "Ürün yok"
+        render :error, status: :bad_request
+      end
     end
 
     def show
-      image = rails_blob_url(@product.product_image)
-      render json: { "image": image, "data": @product }
+      # image = rails_blob_url(@product.product_image)
+      render json: { "data": {product: @product,category: @product.category} }
     end
 
     def create
       @product = Product.create(product_params)
       if @product.valid?
         @product.save
-        render json: @products
+        render json: :create, status: :ok
       else
-        render json: @product.errors.full_messages, status:400
+        @message = @product.errors.full_messages
+        render :error, status: :bad_request
       end
     end
 
@@ -44,7 +52,7 @@ module Api
     end
 
     def product_params
-      params.permit(:name, :description, :quantity, :price, :product_image)
+      params.permit(:name, :description, :quantity, :price, :product_image, :category_id)
     end
 
   end
