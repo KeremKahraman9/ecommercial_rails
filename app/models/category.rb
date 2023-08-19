@@ -14,12 +14,10 @@ class Category < ApplicationRecord
 
   def after_update_method
     p 'after_update çalıştı'
-    byebug
   end
 
   def before_destroy_method
     p'before_destroy çalıştı'
-    byebug
   end
 
 end
