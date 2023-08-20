@@ -33,13 +33,22 @@ module Api
     end
 
     def update
-      @product = update(product_params)
-      render json: @products
+      if @product.update (product_params)
+        render :update, status: :ok
+      else
+        handler_error
+      end
     end
 
     def destroy
       @product.destroy
       render json: "#{@product.id} id'li kayıt silindi"
+    end
+
+    private
+
+    def handler_error
+      render :error, status: :bad_request
     end
 
     def set_product
