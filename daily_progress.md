@@ -11,3 +11,6 @@ Working on callback methods, made design planing for user interface.
 ## Day 4
 ----------------
 Validates added for product. Working on jbuilder.
+## Day 5
+----------------
+Implemented device controls for product actions (create-edit-delete) and login mechanism.
