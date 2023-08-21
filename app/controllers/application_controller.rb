@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
   include DeviseTokenAuth::Concerns::SetUserByToken
+  include Pundit
+
   skip_before_action :verify_authenticity_token
   before_action :configure_permited_parameters, if: :devise_controller?
 
