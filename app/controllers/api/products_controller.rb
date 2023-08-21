@@ -24,6 +24,7 @@ module Api
 
     def create
       @product = Product.create(product_params)
+      authorize(@product)
       if @product.valid?
         @product.save
         render json: :create, status: :ok
@@ -34,6 +35,7 @@ module Api
     end
 
     def update
+      authorize(@product)
       if @product.update (product_params)
         render :update, status: :ok
       else
@@ -42,6 +44,7 @@ module Api
     end
 
     def destroy
+      authorize(@product)
       @product.destroy
       render json: "#{@product.id} id'li kayıt silindi"
     end
