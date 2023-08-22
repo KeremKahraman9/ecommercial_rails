@@ -1,7 +1,6 @@
 ## Day 1
 ----------------
 Models and db created, sample records added on db.
-
 ## Day 2
 ----------------
 Rails Active Storage added to our db. 
@@ -14,3 +13,6 @@ Validates added for product. Working on jbuilder.
 ## Day 5
 ----------------
 Implemented device controls for product actions (create-edit-delete) and login mechanism.
+## Day 6
+----------------
+Pundit gem included, authorize requirement validate added callbacks.
