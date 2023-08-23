@@ -16,3 +16,6 @@ Implemented device controls for product actions (create-edit-delete) and login m
 ## Day 6
 ----------------
 Pundit gem included, authorize requirement validate added callbacks.
+## Day 7
+----------------
+Working on user roles for permissions and authentications.
