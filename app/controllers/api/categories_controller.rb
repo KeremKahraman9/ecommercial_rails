@@ -4,6 +4,7 @@ module Api
 
     before_action :set_category, only: %i[update show destroy]
     before_action :authenticate_user!
+    before_action -> {check_user_roles(Security::RoleModule.only_admin_and_superadmin)}, only: %i[update create destroy]
 
     def index
       @categories = Category.order(created_at: :desc)

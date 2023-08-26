@@ -1,23 +1,24 @@
 # frozen_string_literal: true
 
 class ApplicationPolicy
-  attr_reader :user, :record
+  attr_reader :user, :record, :role_resault
 
-  def initialize(user, record)
+  def initialize(user, record, role_resault = false)
     @user = user
     @record = record
+    @role_resault = role_resault
   end
 
   def index?
-    false
+    role_resault
   end
 
   def show?
-    false
+    role_resault
   end
 
   def create?
-    false
+    role_resault
   end
 
   def new?
@@ -25,7 +26,7 @@ class ApplicationPolicy
   end
 
   def update?
-    false
+    role_resault
   end
 
   def edit?
@@ -33,7 +34,7 @@ class ApplicationPolicy
   end
 
   def destroy?
-    false
+    role_resault
   end
 
   class Scope

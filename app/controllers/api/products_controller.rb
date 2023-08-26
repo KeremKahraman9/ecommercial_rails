@@ -8,18 +8,29 @@ module Api
     
     def index
       @products = Product.all
+      authorize(@products)
       if !@products.blank?
         @message = "Prodcuts rendered."
         render :index, status: :ok
       else
         @message = "Ürün yok"
-        render :error, status: :bad_request
+        handler_error
       end
     end
 
+    # def show
+    #   authorize(@product)
+    #   # image = rails_blob_url(@product.product_image)
+    #   render json: { "data": {product: @product,category: @product.category} }
+    # end
+
     def show
-      # image = rails_blob_url(@product.product_image)
-      render json: { "data": {product: @product,category: @product.category} }
+      authorize(@product)
+      if !@product.blank?
+        render :show, status: :ok
+      else
+        handler_error
+      end
     end
 
     def create
@@ -27,10 +38,10 @@ module Api
       authorize(@product)
       if @product.valid?
         @product.save
-        render json: :create, status: :ok
+        render :create, status: :ok
       else
         @message = @product.errors.full_messages
-        render :error, status: :bad_request
+        handler_error
       end
     end
 
