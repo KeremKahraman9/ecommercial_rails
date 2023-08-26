@@ -19,3 +19,6 @@ Pundit gem included, authorize requirement validate added callbacks.
 ## Day 7
 ----------------
 Working on user roles for permissions and authentications.
+## Day 8,9,10
+----------------
+User roles, permissions and authentications improvements.
