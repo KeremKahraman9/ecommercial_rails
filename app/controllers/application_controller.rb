@@ -13,7 +13,6 @@ class ApplicationController < ActionController::Base
   end
 
   def configure_permitted_parameters
-    byebug
     devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :username, :email, :password, :password_confirmation])
   end
 end
