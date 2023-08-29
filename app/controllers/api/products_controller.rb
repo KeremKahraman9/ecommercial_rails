@@ -2,14 +2,19 @@ module Api
   class ProductsController < ApplicationController
     protect_from_forgery with: :null_session
 
-    before_action :set_product, only: %i[update show destroy]
-    after_action :after_action_method, only: %i[create]
-    before_action :authenticate_user!
-    
+    # before_action :set_product, only: %i[update show destroy]
+    # after_action :after_action_method, only: %i[create]
+    # before_action :authenticate_user!
+    before_action -> {check_user_roles(Security::RoleModule.only_admin_and_superadmin)}, only: %i[update create destroy]
+    before_action -> {check_user_roles(Security::RoleModule.all_roles)}
+    before_action :read_cache, only: %i[index show]
+    after_action -> {write_cache(@product)}, only: %i[index show], if: -> {@is_cached == false}
+    after_action -> {remove_cache(index, show)}, only: %i[create update destroy]
+
     def index
-      @products = Product.all
-      authorize(@products)
-      if !@products.blank?
+      @product = Product.all
+      # authorize(@product)
+      if !@product.blank?
         @message = "Prodcuts rendered."
         render :index, status: :ok
       else
@@ -25,7 +30,8 @@ module Api
     # end
 
     def show
-      authorize(@product)
+      @product = Product.create(product_params)
+      # authorize(@product)
       if !@product.blank?
         render :show, status: :ok
       else
@@ -55,15 +61,15 @@ module Api
     end
 
     def destroy
-      authorize(@product)
+      # authorize(@product)
       @product.destroy
       render json: "#{@product.id} id'li kayıt silindi"
     end
 
     private
-
     def handler_error
       render :error, status: :bad_request
+      # render json: { message: @message }, status: :not_found
     end
 
     def set_product
