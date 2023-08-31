@@ -25,3 +25,6 @@ User roles, permissions and authentications improvements.
 ## Day 11,12
 ----------------
 Redis-Cache added to models, Heroku Cli included.
+## Day 13
+----------------
+Working on logging.
