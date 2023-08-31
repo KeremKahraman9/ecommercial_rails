@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   include Security::SecurityOperation
   include Security::RoleModule
   include Cache::RedisCache
+  include Log::FileLogger
+  include CustomError::ErrorHandler
 
   skip_before_action :verify_authenticity_token
   before_action :configure_permitted_parameters, if: :devise_controller?

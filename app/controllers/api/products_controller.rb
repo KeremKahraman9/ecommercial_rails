@@ -5,14 +5,15 @@ module Api
     # before_action :set_product, only: %i[update show destroy]
     # after_action :after_action_method, only: %i[create]
     # before_action :authenticate_user!
-    before_action -> {check_user_roles(Security::RoleModule.only_admin_and_superadmin)}, only: %i[update create destroy]
-    before_action -> {check_user_roles(Security::RoleModule.all_roles)}
+    # before_action -> {check_user_roles(Security::RoleModule.only_admin_and_superadmin)}, only: %i[update create destroy]
+    # before_action -> {check_user_roles(Security::RoleModule.all_roles)}
     before_action :read_cache, only: %i[index show]
     after_action -> {write_cache(@product)}, only: %i[index show], if: -> {@is_cached == false}
     after_action -> {remove_cache(index, show)}, only: %i[create update destroy]
+    after_action :log_file
 
     def index
-      @product = Product.all
+      @product = Product.mlamsdkm
       # authorize(@product)
       if !@product.blank?
         @message = "Prodcuts rendered."
