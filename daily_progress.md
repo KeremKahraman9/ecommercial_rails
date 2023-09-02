@@ -28,3 +28,6 @@ Redis-Cache added to models, Heroku Cli included.
 ## Day 13
 ----------------
 Working on logging.
+## Day 14,15
+----------------
+Sidekiq included.
