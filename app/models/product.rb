@@ -9,6 +9,12 @@ class Product < ApplicationRecord
   validates :price, presence: true, numericality:{grater_than: 0}
   validate  :name_start_with_a
 
+  after_save :delete_product_after_30days
+  
+  def delete_product_after_30days
+    ProductJob.set(wait: 1.minutes).perform_later(self)
+  end
+
   def name_start_with_a
     if !self.name.start_with?('A')
       errors.add(:name, "should start with A letter")

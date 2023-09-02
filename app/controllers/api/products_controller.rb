@@ -13,7 +13,7 @@ module Api
     after_action :log_file
 
     def index
-      @product = Product.mlamsdkm
+      @product = Product.all
       # authorize(@product)
       if !@product.blank?
         @message = "Prodcuts rendered."
@@ -42,7 +42,7 @@ module Api
 
     def create
       @product = Product.create(product_params)
-      authorize(@product)
+      #authorize(@product)
       if @product.valid?
         @product.save
         render :create, status: :ok
